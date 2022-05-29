@@ -1,25 +1,25 @@
-create table if not exists  list_of_performes(
-id SERIAL primary key,
-artist_name VARCHAR(30) not null,
-genre_id references list_of_genres(id) 
-);
+select album_name , release_date from music_base.album_list
+where release_date = 2018
+;
 
+select track_name, track_duration from music_base.track_list
+where track_duration = (select max(track_duration) from music_base.track_list)
+;
 
-create table if not exists list_of_genres(
-id SERIAl primary key,
-genres_name VARCHAR(30) not null
-);
+select track_name from music_base.track_list
+where track_duration  >= 3.5
+;
 
-create table if not exists album_list(
-id SERIAL primary key,
-artists_id INTEGER references list_of_performes(id),
-album_name VARCHAR(50),
-release_date INTEGER
-);
+select name_compilation from music_base.compilation
+where release_date between 2018 and 2020
+;
 
-create table if not exists track_list(
-id SERIAL primary key,
-album_id INTEGER references album_list(id),
-track_name VARCHAR(50),
-track_duration INTEGER
-);
+select artist_name from music_base.list_of_performes
+where artist_name not like '%% %%'
+;
+
+select  track_name from music_base.track_list
+where track_name  ilike '%%мой%%' 
+or
+track_name ilike  '%%my%%'
+;
