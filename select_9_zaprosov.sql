@@ -41,6 +41,7 @@ group by al.id , al.album_name
 having count(gp.genres_id) > 1
 ; 
 
+
 select id, track_name from music_base.track_list tl 
 where tl.id  not in (select track_id from music_base.compilation_track ct)
 ;
