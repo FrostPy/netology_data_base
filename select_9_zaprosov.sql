@@ -38,7 +38,8 @@ join music_base.list_of_performes lop on lop.id = ap.artist_id
 join music_base.genres_performes gp on lop.id = gp.performes_id 
 join music_base.list_of_genres log2 on log2.id = gp.genres_id 
 group by al.id , al.album_name
-having count(gp.genres_id) > 1 
+having count(gp.genres_id) > 1
+; 
 
 select id, track_name from music_base.track_list tl 
 where tl.id  not in (select track_id from music_base.compilation_track ct)
