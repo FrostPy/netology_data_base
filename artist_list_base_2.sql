@@ -34,9 +34,14 @@ artist_id integer references list_of_performes(id),
 constraint alb_perf primary key (album_id, artist_id)
 );
 
-create table if not exists compilations(
+create table if not exists compilation(
+id SERIAL primary key,
 name_compilation varchar(50),
-release_date integer,
+release_date integer
+);
+
+create table if not exists compilation_track(
 track_id integer references track_list(id),
-constraint compil primary key (name_compilation, track_id)
+compilation_id integer references compilation(id),
+constraint comp_track primary key (track_id, compilation_id)
 );
