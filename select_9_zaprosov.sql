@@ -16,11 +16,10 @@ join music_base.track_list  on music_base.album_list.id = music_base.track_list.
 group by album_id, album_name
 ;
 
-select artist_name from music_base.list_of_performes lop
+select lop.id , artist_name from music_base.list_of_performes lop
 join music_base.album_performes ap on ap.artist_id = lop.id 
 join music_base.album_list al on ap.album_id = al.id 
 where al.release_date  != 2020
-group by lop.id , lop.artist_name 
 ;
 
 select name_compilation from music_base.compilation com
@@ -53,7 +52,18 @@ join music_base.track_list tl on tl.album_id = ap.album_id
 where tl.track_duration = (select min(track_duration) from music_base.track_list tl2)
 ;
 
-select tl.album_id , album_name , count(tl.id) from music_base.track_list tl
-join music_base.album_list al on tl.album_id = al.id 
-group by tl.album_id , al.album_name
-;
+select distinct album_name from music_base.album_list as a 
+join music_base.track_list as t on t.album_id = a.id
+where t.album_id in (
+    select album_id
+    from music_base.track_list tl 
+    group by tl.album_id 
+    having count(id) = (
+        select count(id)
+        from music_base.track_list tl2 
+        group by tl2.album_id
+        order by count
+        limit 1
+    )
+)
+order by a.album_name 
