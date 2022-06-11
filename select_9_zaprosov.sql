@@ -66,4 +66,5 @@ where t.album_id in (
         limit 1
     )
 )
-order by a.album_name 
+order by a.album_name
+;
